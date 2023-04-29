@@ -5,20 +5,23 @@
     "type": "REG_SZ",
     "key": "MyApp",
     "value": "C:\\Program Files\\MyApp\\MyApp.exe",
-    "name": "MyApp Startup"
+    "name": "MyApp Startup",
+    "ignore": "false"
   },
   {
     "hive": "HKEY_CURRENT_USER\\SOFTWARE\\MyApp\\Preferences",
     "type": "REG_DWORD",
     "key": "AutoSaveEnabled",
     "value": "Test",
-    "name": "Auto Save"
+    "name": "Auto Save",
+    "ignore": "false"
   },
   {
     "hive": "HKEY_CURRENT_USER",
     "type": "REG_DWORD",
     "key": "AutoSaveEnabled",
     "value": "Test",
-    "name": "Auto Save"
+    "name": "Autobahn",
+    "ignore": "false"
   }
 ]

@@ -28,6 +28,8 @@ public class twigorhelper
 			Console.WriteLine("Writing to registry... in node: " + node);
 
 			// write to registry
+			// this works btw. I tested it.
+			// https://i.imgur.com/lyxtUgM.png
 			node.SetValue(key, ignore);
 
 			// call success callback
@@ -46,6 +48,11 @@ public class twigorhelper
 			var tw = r.ReadToEnd();
 			return JsonConvert.DeserializeObject<List<RegTweaks>>(tw);
 		}
+	}
+
+	public static void CreateRestorePoint(ShootyShootyBangBang callback, string name)
+	{
+		// create restore point in windows
 	}
 
 	// convert JSON to Indented String
