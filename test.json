@@ -1,0 +1,24 @@
+﻿[
+  {
+    "hive": "HKEY_LOCAL_MACHINE",
+    "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
+    "type": "REG_SZ",
+    "key": "MyApp",
+    "value": "C:\\Program Files\\MyApp\\MyApp.exe",
+    "name": "MyApp Startup"
+  },
+  {
+    "hive": "HKEY_CURRENT_USER\\SOFTWARE\\MyApp\\Preferences",
+    "type": "REG_DWORD",
+    "key": "AutoSaveEnabled",
+    "value": "Test",
+    "name": "Auto Save"
+  },
+  {
+    "hive": "HKEY_CURRENT_USER",
+    "type": "REG_DWORD",
+    "key": "AutoSaveEnabled",
+    "value": "Test",
+    "name": "Auto Save"
+  }
+]
