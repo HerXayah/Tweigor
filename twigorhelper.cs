@@ -11,7 +11,8 @@ public class twigorhelper
 	public delegate void ShootyShootyBangBang(string response);
 
 	// write to registry but check node first where to put it
-	public static void WriteToReg(string hive, string key, string ignore, ShootyShootyBangBang callback)
+	public static void WriteToReg(string hive, string key, string path, string name, string value, string type,
+		string ignore, string folder, ShootyShootyBangBang callback)
 	{
 		try
 		{
@@ -27,11 +28,44 @@ public class twigorhelper
 			};
 			Console.WriteLine("Writing to registry... in node: " + node);
 
+			// check what reg type it is
+			var regtype = type switch
+			{
+				"REG_DWORD" => RegistryValueKind.DWord,
+				"REG_SZ" => RegistryValueKind.String,
+				"REG_QWORD" => RegistryValueKind.QWord,
+				"REG_BINARY" => RegistryValueKind.Binary,
+				"REG_MULTI_SZ" => RegistryValueKind.MultiString,
+				"REG_EXPAND_SZ" => RegistryValueKind.ExpandString,
+				_ => throw new Exception("Invalid type")
+			};
+			Console.WriteLine("Writing to registry... with type: " + regtype);
+
+			// convert value to type
+			object valu = type switch
+			{
+				"REG_DWORD" => Convert.ToInt32(value),
+				"REG_SZ" => value,
+				"REG_QWORD" => Convert.ToInt64(value),
+				"REG_BINARY" => Convert.FromBase64String(value),
+				"REG_MULTI_SZ" => value.Split(','),
+				"REG_EXPAND_SZ" => value,
+				_ => throw new Exception("Invalid type")
+			};
+			Console.WriteLine("ICH BIN FUCKING COOL: " + valu);
+
 			// write to registry
 			// this works btw. I tested it.
 			// https://i.imgur.com/lyxtUgM.png
-			node.SetValue(key, ignore);
 
+			// get path from path
+			var reg = node.OpenSubKey(path, true);
+			// create key
+			reg?.CreateSubKey(key);
+			// open key
+			var reg2 = node.OpenSubKey(path + "\\" + key, true);
+
+			reg2?.SetValue(name, valu, regtype);
 			// call success callback
 			callback("Wrote to registry: " + key + " in " + hive + " with name " + node);
 		} catch (Exception e)

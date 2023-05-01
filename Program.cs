@@ -17,24 +17,25 @@ internal class Program
 			count++;
 			Console.WriteLine("Looped " + count + " times");
 
-			// check if we should ignore this line by checking if the ignore property is empty | true or false
-			if (string.IsNullOrEmpty(line.ignore) || bool.TryParse(line.ignore, out bool ignore) && ignore)
+			if (line.ignore == "true")
 			{
 				Console.WriteLine("Ignored: " + line.key);
-			} else
+			} else if (line.ignore == "false" || string.IsNullOrEmpty(line.ignore))
 			{
 				// write to registry
-				twigorhelper.WriteToReg(line.hive, line.key, line.name, response =>
-				{
-					// if callback contains error, print error, else print success
-					Console.WriteLine(response.Contains("Error")
-						? response
-						: "Wrote to registry: " + line.key + " in " + line.hive + " with name " + line.name);
-				});
+				twigorhelper.WriteToReg(line.hive, line.key, line.path, line.name, line.value, line.type, line.ignore,
+					line.folder, response =>
+					{
+						// if callback contains error, print error, else print success
+						Console.WriteLine(response.Contains("Error")
+							? response
+							: "Wrote to registry: " + line.key + " in " + line.hive + " with name " + line.name);
+					});
 			}
 		}
 	}
 }
 
+// json tree
 public record struct RegTweaks(string hive, string path, string type, string value, string key, string name,
-	string ignore);
+	string ignore, string folder);
