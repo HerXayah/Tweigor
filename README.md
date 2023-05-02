@@ -1,6 +1,6 @@
-﻿# Twigor-CS
+﻿# Tweigor
 
-Twigor-CS is a tool to automatically apply Regedits from json files.
+Tweigor, short TweakingIntegrator, is a tool to automatically apply Regedits from json files.
 
 <img src="./media/lm8ubGX.png">
 
