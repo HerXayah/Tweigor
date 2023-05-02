@@ -16,6 +16,6 @@ Twigor-CS is a tool to automatically apply Regedits from json files.
 - [ ] Make GUI
 - [x] Make CLI
 - [x] Make it work in general
-- [x] Make presets
+- [ ] Make presets
 - [ ] cleanup code
 
