@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Management;
 using System.IO;
-using System.Runtime.InteropServices;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 
@@ -85,10 +84,7 @@ public class twigorhelper
 			return JsonConvert.DeserializeObject<List<RegTweaks>>(tw);
 		}
 	}
-	
-	[DllImport("Srclient.dll")]
-	public static extern int SRRemoveRestorePoint(int index);
-	
+
 	public static bool CreateRestorePoint(string RPName, int RPType, int EventType)
 	{
 
@@ -112,7 +108,6 @@ public class twigorhelper
 		}
 
 	}
-	
 	
 	// convert JSON to Indented String
 	public static string JsonToIndentedString(string jsonpath)
