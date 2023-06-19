@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Management;
 using System.IO;
+using System.Runtime.InteropServices;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 
@@ -16,7 +18,7 @@ public class twigorhelper
 	{
 		try
 		{
-			// c# 8 switch expression
+			// C# 8 switch expression
 			var node = hive switch
 			{
 				"HKEY_CURRENT_USER" => Registry.CurrentUser,
@@ -83,12 +85,35 @@ public class twigorhelper
 			return JsonConvert.DeserializeObject<List<RegTweaks>>(tw);
 		}
 	}
-
-	public static void CreateRestorePoint(ShootyShootyBangBang callback, string name)
+	
+	[DllImport("Srclient.dll")]
+	public static extern int SRRemoveRestorePoint(int index);
+	
+	public static bool CreateRestorePoint(string RPName, int RPType, int EventType)
 	{
-		// create restore point in windows
-	}
 
+		// create restore point in windows
+		ManagementClass SRClass = new ManagementClass("//./root/default:SystemRestore");
+
+		ManagementBaseObject SRArgs = SRClass.GetMethodParameters("CreateRestorePoint");
+		SRArgs["Description"] = RPName;
+		SRArgs["RestorePointType"] = RPType;
+		SRArgs["EventType"] = EventType;
+
+		try
+		{
+			ManagementBaseObject outParams = SRClass.InvokeMethod("CreateRestorePoint", SRArgs, new InvokeMethodOptions(null, System.TimeSpan.MaxValue));
+			return true;
+		}
+		catch (ManagementException err)
+		{
+			Console.WriteLine(err);
+			return false;
+		}
+
+	}
+	
+	
 	// convert JSON to Indented String
 	public static string JsonToIndentedString(string jsonpath)
 	{
